@@ -43,8 +43,10 @@ export default function EducationSection() {
           className="text-center mb-14"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-sage-100/80 dark:bg-sage-400/10 text-sage-700 dark:text-sage-400 text-sm font-medium mb-4">Plant Library</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 dark:text-warm-50 mb-4">Learn & Grow</h2>
-          <p className="text-charcoal-600 dark:text-charcoal-300 max-w-2xl mx-auto">Free plant care guides, Karachi seasonal calendars, pest management tips, and beginner tutorials.</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 dark:text-warm-50 mb-4">Karachi Gardening Guides</h2>
+          <p className="text-charcoal-600 dark:text-charcoal-300 max-w-2xl mx-auto">
+            Free guides on native plants Pakistan, medicinal herbs, balcony gardening Karachi, biodiversity, and monsoon planting calendars.
+          </p>
         </motion.div>
 
         <div className="max-w-xl mx-auto mb-8">
@@ -52,7 +54,7 @@ export default function EducationSection() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-charcoal-400" />
             <input
               type="text"
-              placeholder="Search plant guides..."
+              placeholder="Search balcony gardening, medicinal plants, monsoon…"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-white dark:bg-charcoal-800 border border-sage-200 dark:border-charcoal-700 text-charcoal-900 dark:text-warm-100 placeholder-charcoal-400 focus:outline-none focus:ring-2 focus:ring-mint-400 focus:border-transparent transition-all"

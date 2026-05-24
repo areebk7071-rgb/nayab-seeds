@@ -39,8 +39,11 @@ export default function KarachiSection() {
           className="text-center mb-14"
         >
           <span className="inline-block px-4 py-1.5 rounded-full bg-terracotta-100/80 dark:bg-terracotta-500/10 text-terracotta-700 dark:text-terracotta-400 text-sm font-medium mb-4">Local Knowledge</span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 dark:text-warm-50 mb-4">Built For Karachi</h2>
-          <p className="text-charcoal-600 dark:text-charcoal-300 max-w-2xl mx-auto">Gardening advice specifically tailored for Karachi's unique climate, from scorching summers to monsoon magic.</p>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-charcoal-900 dark:text-warm-50 mb-4">Why Karachi Gardening Needs Local Seeds</h2>
+          <p className="text-charcoal-600 dark:text-charcoal-300 max-w-2xl mx-auto">
+            Coastal heat, monsoon humidity, and rooftop wind make Karachi different from the rest of Pakistan.
+            We test seeds for 35–45°C summers, monsoon sowing windows, and balcony gardening Karachi — so you grow what survives here.
+          </p>
         </motion.div>
 
         <div className="flex flex-wrap justify-center gap-3 mb-12">

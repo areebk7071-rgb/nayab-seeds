@@ -4,6 +4,18 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      screens: {
+        xs: '475px',
+      },
+      minHeight: {
+        screen: ['100vh', '100dvh'],
+      },
+      spacing: {
+        'safe-top': 'env(safe-area-inset-top, 0px)',
+        'safe-bottom': 'env(safe-area-inset-bottom, 0px)',
+        'safe-left': 'env(safe-area-inset-left, 0px)',
+        'safe-right': 'env(safe-area-inset-right, 0px)',
+      },
       colors: {
         mint: { 50: '#f2fbf7', 100: '#e1f6ec', 200: '#c3edd9', 300: '#95ddbe', 400: '#61c69d', 500: '#3ba77d', 600: '#2b8663', 700: '#236c51', 800: '#1e5642', 900: '#194737' },
         sage: { 50: '#f4f6f2', 100: '#e5e9de', 200: '#ccdbcc', 300: '#a3bda8', 400: '#7a9e82', 500: '#587c60', 600: '#415e48', 700: '#314737', 800: '#233327', 900: '#17211a' },

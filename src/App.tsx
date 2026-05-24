@@ -1,87 +1,97 @@
-import { useState, useRef, useCallback } from 'react';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { CartProvider } from './context/CartContext';
 import { ThemeProvider } from './context/ThemeContext';
-import Navbar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
-import HeroSection from './components/hero/HeroSection';
-import CategoriesSection from './components/categories/CategoriesSection';
-import KarachiSection from './components/karachi/KarachiSection';
-import ProductsSection from './components/products/ProductsSection';
-import CommunitySection from './components/community/CommunitySection';
-import EducationSection from './components/education/EducationSection';
-import AISection from './components/ai/AISection';
-import BrandSection from './components/brand/BrandSection';
-import ExtraFeatures from './components/shared/ExtraFeatures';
-import CartDrawer from './components/ecommerce/CartDrawer';
+import MainLayout from './layouts/MainLayout';
+import HomePage from './pages/HomePage';
 
-function AppContent() {
-  const [currentSection, setCurrentSection] = useState('home');
-  const [cartOpen, setCartOpen] = useState(false);
-  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+const ShopPage = lazy(() => import('./pages/ShopPage'));
+const ProductPage = lazy(() => import('./pages/ProductPage'));
+const QuizPage = lazy(() => import('./pages/QuizPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
+const NativeKarachiPage = lazy(() => import('./pages/NativeKarachiPage'));
+const CommunityPage = lazy(() => import('./pages/CommunityPage'));
 
-  const setSectionRef = useCallback((id: string) => (el: HTMLDivElement | null) => {
-    sectionRefs.current[id] = el;
-  }, []);
-
-  const handleNavigate = useCallback((section: string) => {
-    setCurrentSection(section);
-    const el = sectionRefs.current[section];
-    if (el) {
-      const offset = 80;
-      const top = el.getBoundingClientRect().top + window.scrollY - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  }, []);
-
+function PageLoader() {
   return (
-    <div className="min-h-screen bg-warm-50 dark:bg-charcoal-900 transition-colors duration-300">
-      <Navbar
-        onNavigate={handleNavigate}
-        currentSection={currentSection}
-        cartOpen={cartOpen}
-        setCartOpen={setCartOpen}
-      />
-      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
-
-      <main>
-        <div ref={setSectionRef('home')}>
-          <HeroSection onNavigate={handleNavigate} />
-        </div>
-        <div ref={setSectionRef('categories')}>
-          <CategoriesSection onNavigate={handleNavigate} />
-        </div>
-        <div ref={setSectionRef('products')}>
-          <ProductsSection />
-        </div>
-        <div ref={setSectionRef('karachi')}>
-          <KarachiSection />
-        </div>
-        <div ref={setSectionRef('brand')}>
-          <BrandSection />
-        </div>
-        <div ref={setSectionRef('community')}>
-          <CommunitySection />
-        </div>
-        <div ref={setSectionRef('education')}>
-          <EducationSection />
-        </div>
-        <ExtraFeatures />
-        <div ref={setSectionRef('ai')}>
-          <AISection />
-        </div>
-      </main>
-
-      <Footer />
+    <div className="min-h-[50vh] flex items-center justify-center pt-32">
+      <div className="w-10 h-10 border-4 border-mint-500 border-t-transparent rounded-full animate-spin" />
     </div>
   );
 }
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <CartProvider>
-        <AppContent />
-      </CartProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<MainLayout />}>
+                <Route index element={<HomePage />} />
+                <Route
+                  path="shop"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <ShopPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="product/:handle"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <ProductPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="quiz"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <QuizPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="about"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <AboutPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="contact"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <ContactPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="native-karachi"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <NativeKarachiPage />
+                    </Suspense>
+                  }
+                />
+                <Route
+                  path="community"
+                  element={
+                    <Suspense fallback={<PageLoader />}>
+                      <CommunityPage />
+                    </Suspense>
+                  }
+                />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }

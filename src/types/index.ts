@@ -1,22 +1,45 @@
+export type Difficulty = 'Easy' | 'Moderate' | 'Advanced';
+export type Sunlight = 'Full Sun' | 'Partial Shade' | 'Full Shade' | 'Partial Sun';
+export type Watering = 'Low' | 'Moderate' | 'High';
+
 export interface Product {
   id: string;
+  handle: string;
   name: string;
   nameUrdu?: string;
   description: string;
   price: number;
+  compareAtPrice?: number;
   image: string;
+  images: string[];
   category: string;
-  difficulty: 'Easy' | 'Moderate' | 'Advanced';
-  sunlight: 'Full Sun' | 'Partial Shade' | 'Full Shade' | 'Partial Sun';
-  watering: 'Low' | 'Moderate' | 'High';
+  shopTags: string[];
+  difficulty: Difficulty;
+  sunlight: Sunlight;
+  watering: Watering;
   germinationDays: string;
+  plantingSeason: string;
   karachiRating: number;
   badges: string[];
+  smartTags: string[];
   inStock: boolean;
+  quantityAvailable: number;
+  variantId?: string;
   medicinal?: boolean;
   pollinator?: boolean;
   native?: boolean;
   edible?: boolean;
+  droughtTolerant?: boolean;
+  balconyFriendly?: boolean;
+  beginnerFriendly?: boolean;
+}
+
+export interface ShopCategory {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  icon: string;
 }
 
 export interface Category {
@@ -31,6 +54,7 @@ export interface Category {
 export interface CartItem {
   product: Product;
   quantity: number;
+  lineId?: string;
 }
 
 export interface CommunityPost {
@@ -78,4 +102,15 @@ export interface SeasonInfo {
   tempRange: string;
   plantingTips: string[];
   color: string;
+}
+
+export type SortOption = 'featured' | 'price-asc' | 'price-desc' | 'name';
+
+export interface QuizAnswers {
+  space: 'balcony' | 'garden';
+  sunlight: 'full-sun' | 'partial-sun' | 'shade';
+  watering: 'daily' | 'moderate' | 'low';
+  purpose: 'medicinal' | 'edible' | 'flowers' | 'greenery';
+  experience: 'beginner' | 'experienced';
+  season: 'summer' | 'monsoon' | 'winter' | 'spring';
 }

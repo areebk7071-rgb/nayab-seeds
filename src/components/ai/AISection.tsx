@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Stethoscope, Sparkles, CloudSun, MessageCircle, ArrowRight, Zap, Scan } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { Brain, Stethoscope, Sparkles, CloudSun, MessageCircle, Zap, Scan } from 'lucide-react';
+import { useCart } from '../../context/CartContext';
 
 interface QuizAnswer {
   sunlight: string;
@@ -166,7 +166,7 @@ export default function AISection() {
   });
   const [showResult, setShowResult] = useState(false);
   const [recommendations, setRecommendations] = useState<PlantRecommendation[]>([]);
-  const { addToCart } = useCart();
+  useCart();
 
   const handleAnswer = (value: string) => {
     const questionId = quizQuestions[quizStep].id as keyof QuizAnswer;
@@ -202,14 +202,8 @@ export default function AISection() {
     setRecommendations([]);
   };
 
-  const handleAddToCart = (plant: PlantRecommendation) => {
-    addToCart({
-      id: plant.id,
-      name: plant.name,
-      price: plant.price,
-      image: plant.image,
-      quantity: 1,
-    });
+  const handleAddToCart = (_plant: PlantRecommendation) => {
+    // Legacy section — use PlantQuiz component for cart integration
   };
 
   return (
