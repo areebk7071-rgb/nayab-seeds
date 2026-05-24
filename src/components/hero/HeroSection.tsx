@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Leaf, Sparkles } from 'lucide-react';
+import { Leaf, Sparkles, HandHeart, Sprout, BadgeCheck } from 'lucide-react';
 
 interface HeroProps {
   onNavigate: (section: string) => void;
@@ -8,7 +8,7 @@ interface HeroProps {
 function FloatingParticle({ delay, x, y, size, duration }: { delay: number; x: string; y: string; size: number; duration: number }) {
   return (
     <motion.div
-      className="absolute pointer-events-none"
+      className="absolute pointer-events-none z-10"
       style={{ left: x, top: y }}
       initial={{ opacity: 0, y: 0 }}
       animate={{
@@ -32,7 +32,7 @@ function FloatingParticle({ delay, x, y, size, duration }: { delay: number; x: s
 function PollenParticle({ delay, x, y }: { delay: number; x: string; y: string }) {
   return (
     <motion.div
-      className="absolute pointer-events-none"
+      className="absolute pointer-events-none z-10"
       style={{ left: x, top: y }}
       animate={{
         opacity: [0, 0.8, 0],
@@ -69,12 +69,34 @@ export default function HeroSection({ onNavigate }: HeroProps) {
     y: `${Math.random() * 40 + 50}%`,
   }));
 
+  const stats = [
+    { icon: Leaf, value: '50+', label: 'Native Species', color: 'text-mint-600 dark:text-mint-400' },
+    { icon: HandHeart, value: '5K+', label: 'Happy Growers', color: 'text-mint-600 dark:text-mint-400' },
+    { icon: Sprout, value: '98%', label: 'Germination Rate', color: 'text-mint-600 dark:text-mint-400' },
+    { icon: BadgeCheck, value: '100%', label: 'Karachi-Tested', color: 'text-mint-600 dark:text-mint-400' },
+  ];
+
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-mint-50 via-warm-50 to-sage-50 dark:from-charcoal-900 dark:via-charcoal-800 dark:to-sage-900/20" />
-      <div className="absolute top-20 right-10 w-72 h-72 bg-mint-200/30 dark:bg-mint-800/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-20 left-10 w-96 h-96 bg-terracotta-200/20 dark:bg-terracotta-800/10 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sage-200/20 dark:bg-sage-800/10 rounded-full blur-3xl" />
+    <section className="relative min-h-screen flex items-center overflow-hidden z-10 select-none">
+      {/* Curved glowing gold path */}
+      <svg className="absolute right-0 top-[10%] w-full max-w-4xl h-[700px] pointer-events-none opacity-80 z-0" viewBox="0 0 1000 700" fill="none">
+        <path d="M 200 650 Q 550 500 950 150" stroke="url(#goldGradient)" strokeWidth="6" strokeLinecap="round" opacity="0.65" filter="url(#glowPath)" />
+        <defs>
+          <linearGradient id="goldGradient" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#61c69d" stopOpacity="0" />
+            <stop offset="60%" stopColor="#fbbf24" stopOpacity="0.85" />
+            <stop offset="100%" stopColor="#fffbeb" stopOpacity="0.1" />
+          </linearGradient>
+          <filter id="glowPath" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="12" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+      </svg>
+
+      <div className="absolute inset-0 bg-gradient-to-br from-[#dff2e8] via-[#f7faf5] to-[#f4f2e5] dark:from-[#13241b] dark:via-[#1c221e] dark:to-[#22211b] z-0" />
+      <div className="absolute top-20 right-10 w-96 h-96 bg-[#8ae4bc]/30 dark:bg-mint-800/10 rounded-full blur-3xl z-0" />
+      <div className="absolute bottom-20 left-10 w-96 h-96 bg-sand-200/20 dark:bg-terracotta-800/10 rounded-full blur-3xl z-0" />
 
       {particles.map((p, i) => (
         <FloatingParticle key={i} {...p} />
@@ -83,33 +105,30 @@ export default function HeroSection({ onNavigate }: HeroProps) {
         <PollenParticle key={`pollen-${i}`} {...p} />
       ))}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 sm:py-40">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 sm:py-40 w-full">
         <div className="max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-mint-100/80 dark:bg-mint-400/10 border border-mint-200 dark:border-mint-400/20 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/70 dark:bg-mint-400/10 border border-white/40 dark:border-mint-400/20 mb-6 shadow-sm"
           >
             <Sparkles className="w-4 h-4 text-mint-600 dark:text-mint-400" />
-            <span className="text-sm font-medium text-mint-700 dark:text-mint-300">Karachi-Tested Seeds</span>
+            <span className="text-sm font-medium text-mint-800 dark:text-mint-300">Karachi-Tested Seeds</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-bold text-charcoal-900 dark:text-warm-50 leading-[1.1] mb-6"
+            className="text-5xl sm:text-6xl lg:text-7.5xl font-extrabold text-charcoal-900 dark:text-warm-50 leading-[1.15] mb-6 font-display"
           >
             Grow Something{' '}
-            <span className="relative">
-              <span className="text-mint-600 dark:text-mint-400">Rare</span>
-              <motion.span
-                className="absolute -bottom-2 left-0 right-0 h-1 bg-mint-400/40 dark:bg-mint-400/20 rounded-full"
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
-              />
+            <span className="relative inline-block text-[#5fc693] dark:text-[#5fc693] font-extrabold ml-1">
+              Rare
+              <svg className="absolute -bottom-4 left-0 right-0 w-full h-4 text-charcoal-900 dark:text-warm-100" viewBox="0 0 100 12" preserveAspectRatio="none">
+                <path d="M 1 5 Q 50 1 99 4 M 3 9 Q 50 5 97 8" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.85" />
+              </svg>
             </span>
           </motion.h1>
 
@@ -117,33 +136,31 @@ export default function HeroSection({ onNavigate }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="text-lg sm:text-xl text-charcoal-600 dark:text-charcoal-300 leading-relaxed mb-10 max-w-xl"
+            className="text-lg sm:text-xl text-[#4a6b57] dark:text-sage-300 leading-relaxed mb-10 max-w-xl font-medium"
           >
-            Sustainable native, medicinal, and edible plants tested for Karachi's climate. From balcony herbs to rooftop gardens.
+            Sustainable native, medicinal, and edible plants tested for Karachi's climate.
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-wrap gap-4"
+            className="flex flex-wrap gap-5"
           >
             <motion.button
               onClick={() => onNavigate('products')}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="btn-primary flex items-center gap-2"
+              className="bg-[#9de0bd] hover:bg-[#86d4af] text-[#1d3326] font-bold px-8 py-3.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300"
             >
               Shop Seeds
-              <ArrowRight className="w-4 h-4" />
             </motion.button>
             <motion.button
               onClick={() => onNavigate('categories')}
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="btn-outline flex items-center gap-2"
+              className="border border-charcoal-800 dark:border-warm-200 text-charcoal-900 dark:text-warm-100 font-semibold px-8 py-3.5 rounded-full hover:bg-charcoal-900/5 dark:hover:bg-warm-100/10 transition-all duration-300"
             >
-              <Leaf className="w-4 h-4" />
               Explore Native Plants
             </motion.button>
           </motion.div>
@@ -152,25 +169,31 @@ export default function HeroSection({ onNavigate }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="flex flex-wrap gap-8 mt-14 pt-8 border-t border-sage-200/50 dark:border-charcoal-700/50"
+            className="bg-white/20 dark:bg-charcoal-800/20 backdrop-blur-md border border-white/40 dark:border-charcoal-700/40 rounded-[28px] p-5 flex flex-wrap gap-4 mt-16 max-w-4xl"
           >
-            {[
-              { value: '50+', label: 'Native Species' },
-              { value: '5K+', label: 'Happy Growers' },
-              { value: '98%', label: 'Germination Rate' },
-              { value: '100%', label: 'Karachi-Tested' },
-            ].map((stat, i) => (
-              <div key={i}>
-                <p className="text-2xl sm:text-3xl font-bold text-mint-600 dark:text-mint-400">{stat.value}</p>
-                <p className="text-sm text-charcoal-500 dark:text-charcoal-400">{stat.label}</p>
-              </div>
-            ))}
+            {stats.map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={i}
+                  className="bg-white/45 dark:bg-charcoal-800/45 backdrop-blur-md border border-white/30 dark:border-charcoal-700/30 rounded-2xl p-4 flex flex-col justify-between min-w-[190px] flex-1 shadow-sm transition-all duration-300 hover:y-[-2px]"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-xl bg-white dark:bg-charcoal-700 flex items-center justify-center shadow-sm">
+                      <Icon className="w-5 h-5 text-[#2b8663] dark:text-[#61c69d]" />
+                    </div>
+                    <p className="text-3xl font-extrabold text-charcoal-900 dark:text-warm-50 font-display">{stat.value}</p>
+                  </div>
+                  <p className="text-xs font-semibold text-[#4a6b57] dark:text-sage-300 mt-3">{stat.label}</p>
+                </div>
+              );
+            })}
           </motion.div>
         </div>
       </div>
 
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
         animate={{ y: [0, 8, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >

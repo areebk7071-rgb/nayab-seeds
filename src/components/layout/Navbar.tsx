@@ -26,11 +26,8 @@ export default function Navbar({ onNavigate, currentSection, cartOpen, setCartOp
   const navItems = [
     { id: 'home', label: 'Home' },
     { id: 'categories', label: 'Categories' },
-    { id: 'products', label: 'Shop' },
-    { id: 'karachi', label: 'Karachi Guide' },
-    { id: 'community', label: 'Community' },
-    { id: 'education', label: 'Learn' },
-    { id: 'ai', label: 'AI Tools' },
+    { id: 'products', label: 'Products' },
+    { id: 'ai', label: 'AI Assistant' },
   ];
 
   return (
@@ -38,37 +35,31 @@ export default function Navbar({ onNavigate, currentSection, cartOpen, setCartOp
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'glass shadow-lg shadow-black/5'
-            : 'bg-transparent'
-        }`}
+        className={`fixed top-4 left-4 right-4 sm:top-6 sm:left-8 sm:right-8 z-50 transition-all duration-500`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto bg-white/85 dark:bg-[#202227]/85 backdrop-blur-lg border border-white/50 dark:border-[#2e3037]/50 shadow-md shadow-black/5 rounded-[22px] px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <motion.button
               onClick={() => onNavigate('home')}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2.5 group"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <div className="w-9 h-9 bg-mint-600 rounded-xl flex items-center justify-center shadow-lg shadow-mint-600/30">
-                <Leaf className="w-5 h-5 text-white" />
-              </div>
-              <span className="text-xl font-bold text-charcoal-900 dark:text-warm-100">
-                Nayab<span className="text-mint-600 dark:text-mint-400">Seeds</span>
+              <Leaf className="w-6 h-6 sm:w-7 sm:h-7 text-[#5fc693] fill-[#5fc693]/20" />
+              <span className="text-xl sm:text-2xl font-extrabold text-charcoal-900 dark:text-warm-50 font-display">
+                Nayab Seeds
               </span>
             </motion.button>
 
-            <div className="hidden lg:flex items-center gap-1">
+            <div className="hidden lg:flex items-center gap-4">
               {navItems.map(item => (
                 <button
                   key={item.id}
                   onClick={() => onNavigate(item.id)}
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                  className={`px-3 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
                     currentSection === item.id
-                      ? 'text-mint-700 dark:text-mint-400 bg-mint-50 dark:bg-mint-400/10'
-                      : 'text-charcoal-600 dark:text-charcoal-300 hover:text-mint-700 dark:hover:text-mint-400 hover:bg-mint-50/50 dark:hover:bg-mint-400/5'
+                      ? 'text-[#2b8663] dark:text-[#61c69d]'
+                      : 'text-charcoal-700 dark:text-charcoal-300 hover:text-[#2b8663] dark:hover:text-[#61c69d]'
                   }`}
                 >
                   {item.label}
