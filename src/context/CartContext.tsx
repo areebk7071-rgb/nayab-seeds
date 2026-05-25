@@ -1,7 +1,11 @@
 import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import type { Product, CartItem } from '../types';
 import { isShopifyConfigured } from '../lib/shopify/client';
-import { getCheckoutUrl } from '../lib/shopify/cart';
+import {
+  getCheckoutUrl,
+  createShopifyCart,
+  addToShopifyCart,
+} from '../lib/shopify/cart';
 
 interface CartContextType {
   items: CartItem[];
@@ -52,14 +56,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return;
     }
     setItems((prev) =>
-      prev.map((item) => (item.product.id === productId ? { ...item, quantity } : item))
+      prev.map((item) =>
+        item.product.id === productId ? { ...item, quantity } : item
+      )
     );
   }, []);
 
   const clearCart = useCallback(() => setItems([]), []);
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
-  const totalPrice = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const totalPrice = items.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
 
   const isInCart = useCallback(
     (productId: string) => items.some((item) => item.product.id === productId),
@@ -78,21 +87,44 @@ export function CartProvider({ children }: { children: ReactNode }) {
     [wishlist]
   );
 
+  /**
+   * Checkout flow:
+   * - If Shopify is configured, create a Shopify cart with the first item,
+   *   then add any remaining items, and finally redirect to the checkout URL.
+   * - If Shopify is not configured, fall back to a WhatsApp order message.
+   */
   const checkout = useCallback(async () => {
     if (items.length === 0) return;
 
-    if (useShopify && items[0].product.variantId) {
+    if (useShopify) {
+      // Filter out items that lack a Shopify variantId
+      const shopItems = items.filter((i) => i.product.variantId);
+      if (shopItems.length === 0) {
+        console.warn('No Shopify variant IDs available for checkout.');
+        return;
+      }
+
       setIsCheckingOut(true);
       try {
-        let url = '';
-        for (const item of items) {
-          if (!item.product.variantId) continue;
-          url = await getCheckoutUrl(item.product.variantId, item.quantity);
+        // Create cart with the first item
+        const first = shopItems[0];
+        const cart = await createShopifyCart(first.product.variantId!, first.quantity);
+        let checkoutUrl = cart.checkoutUrl;
+
+        // Add remaining items to the same cart
+        for (let i = 1; i < shopItems.length; i++) {
+          const it = shopItems[i];
+          const updatedCart = await addToShopifyCart(
+            cart.id,
+            it.product.variantId!,
+            it.quantity
+          );
+          checkoutUrl = updatedCart.checkoutUrl;
         }
-        if (url) {
-          window.location.href = url;
-          return;
-        }
+
+        // Redirect to Shopify checkout
+        window.location.href = checkoutUrl;
+        return;
       } catch (e) {
         console.error('Shopify checkout failed', e);
       } finally {
@@ -100,7 +132,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
       }
     }
 
-    const lines = items.map((i) => `${i.product.name} x${i.quantity}`).join('\n');
+    // Fallback: WhatsApp order message
+    const lines = items
+      .map((i) => `${i.product.name} x${i.quantity}`)
+      .join('\n');
     const message = encodeURIComponent(
       `Assalam-o-Alaikum! I'd like to order:\n\n${lines}\n\nTotal: Rs. ${totalPrice}\n\nPayment: COD / Easypaisa / JazzCash`
     );
