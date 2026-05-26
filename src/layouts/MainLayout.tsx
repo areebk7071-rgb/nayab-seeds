@@ -9,7 +9,7 @@ export default function MainLayout() {
 
   return (
     <div className="min-h-screen min-h-[100dvh] bg-warm-50 dark:bg-charcoal-900 transition-colors duration-300 overflow-x-hidden">
-      <Navbar cartOpen={cartOpen} setCartOpen={setCartOpen} />
+      <Navbar />
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <main>
         <Outlet context={{ setCartOpen }} />

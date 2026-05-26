@@ -26,7 +26,7 @@ export default function Footer() {
           <div className="sm:col-span-2 lg:col-span-2">
             <Link to="/" className="flex items-center gap-3 mb-4">
               <img
-                src="/logo.png"
+                src="/Logo.png"
                 alt="Nayab Seeds"
                 className="h-12 w-12 rounded-lg object-cover shadow-md"
                 width={48}

@@ -2,7 +2,6 @@
  * Crawlable, human-readable summary for SEO and AI agents (visible, not hidden).
  */
 import { Link } from 'react-router-dom';
-import { pageSeo } from '../../config/seo';
 
 export default function SeoIntro() {
   return (
@@ -15,7 +14,7 @@ export default function SeoIntro() {
           Karachi Gardening Seeds — Native &amp; Medicinal Plants in Pakistan
         </h2>
         <p className="text-sm sm:text-base text-charcoal-600 dark:text-charcoal-300 leading-relaxed">
-          {pageSeo.home.h1Support} Shop online with delivery across Karachi: balcony gardening kits,
+          Shop online with delivery across Karachi: balcony gardening kits,
           heat tolerant plants for summer, pollinator-friendly natives, and a free{' '}
           <Link to="/quiz" className="text-mint-700 dark:text-mint-400 font-medium hover:underline">
             Smart Plant Quiz

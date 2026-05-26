@@ -2,7 +2,6 @@ import { createContext, useContext, useState, useCallback, ReactNode } from 'rea
 import type { Product, CartItem } from '../types';
 import { isShopifyConfigured } from '../lib/shopify/client';
 import {
-  getCheckoutUrl,
   createShopifyCart,
   addToShopifyCart,
 } from '../lib/shopify/cart';
