@@ -14,7 +14,7 @@ export default function FeaturedProducts({ products }: FeaturedProductsProps) {
   const featured = products.slice(0, 4);
 
   return (
-    <section className="gradient-mint section-padding">
+    <section id="products" className="gradient-mint section-padding scroll-mt-24">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>

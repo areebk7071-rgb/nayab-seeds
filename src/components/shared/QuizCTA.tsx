@@ -4,7 +4,7 @@ import { Sparkles, ArrowRight } from 'lucide-react';
 
 export default function QuizCTA() {
   return (
-    <section className="section-padding relative overflow-hidden">
+    <section id="ai" className="section-padding relative overflow-hidden scroll-mt-24">
       <div className="absolute inset-0 bg-gradient-to-br from-mint-600 via-mint-700 to-sage-800" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-terracotta-400/20 rounded-full blur-3xl" />

@@ -203,6 +203,7 @@ export default function AISection() {
   };
 
   const handleAddToCart = (_plant: PlantRecommendation) => {
+    void _plant;
     // Legacy section — use PlantQuiz component for cart integration
   };
 
