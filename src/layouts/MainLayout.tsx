@@ -16,7 +16,7 @@ export default function MainLayout() {
         isHome ? 'bg-transparent' : 'bg-warm-50 dark:bg-charcoal-900',
       ].join(' ')}
     >
-      {!isHome ? <Navbar /> : null}
+      {!isHome ? <Navbar onCartClick={() => setCartOpen(true)} /> : null}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
       <main>
         <Outlet context={{ setCartOpen }} />
